@@ -1,0 +1,42 @@
+# creare two postgres db service
+# create a service to connect to the db and run a query
+# create a network
+# create a volume for the db data
+# create a docker compose file
+
+version: "3.8"
+
+services:
+  postgres_1:
+    image: postgres:14
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_HOST: localhost
+    volumes:
+      - db1-data:/var/lib/postgresql/data
+
+  postgres_2:
+    image: postgres:14
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_HOST: localhost
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db2-data:/var/lib/postgresql/data
+
+volumes:
+  db1-data:
+    driver: local
+  db2-data:
+    driver: local
+
+networks:
+  my-network:
+    driver: bridge
